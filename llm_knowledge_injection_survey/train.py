@@ -56,8 +56,6 @@ def train(
     )
     trainer.train()
 
-    trainer.save_model(output_dir / "final_model.safetensors")
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
