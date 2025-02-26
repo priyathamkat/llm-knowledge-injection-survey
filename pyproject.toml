@@ -23,4 +23,4 @@ requires = ["setuptools >= 75.0"]
 build-backend = "setuptools.build_meta"
 
 [project.scripts]
-create-dataset = "llm_knowledge_injection_survey.datasets.create_dataset:main"
+create-dataset = "llm_knowledge_injection_survey.word_tasks_datasets.create_dataset:main"
