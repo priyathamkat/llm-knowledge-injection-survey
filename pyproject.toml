@@ -2,9 +2,25 @@
 name = "llm-knowledge-injection-survey"
 version = "0.1.0"
 description = "LLM Knowledge Injection Survey"
-authors = ["Priyatham Kattakinda <priyathamkat@gmail.com>"]
+authors = [{name = "Priyatham Kattakinda", email = "priyathamkat@gmail.com"},]
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "pydantic>=2.10.6",
     "trl>=0.15.2",
 ]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.9.7",
+]
+
+[tool.ruff.lint]
+select = ["I"]
+
+[build-system]
+requires = ["setuptools >= 75.0"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+create-dataset = "llm_knowledge_injection_survey.datasets.create_dataset:main"
