@@ -5,7 +5,7 @@ from typing import Any
 import numpy as np
 from datasets import Dataset, DatasetDict
 
-from llm_knowledge_injection_survey.datasets.tasks import (
+from llm_knowledge_injection_survey.word_tasks_datasets.tasks import (
     NthLetterTask,
     SimpleWordTask,
     WordLengthTask,
