@@ -14,3 +14,6 @@ wheels/
 
 # Huggingface dataset
 *.hf
+
+# Output
+output/
