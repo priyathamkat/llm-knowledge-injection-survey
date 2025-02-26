@@ -6,6 +6,7 @@ authors = [{name = "Priyatham Kattakinda", email = "priyathamkat@gmail.com"},]
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "flash-attn>=2.7.4.post1",
     "pydantic>=2.10.6",
     "trl>=0.15.2",
 ]
@@ -14,6 +15,9 @@ dependencies = [
 dev = [
     "ruff>=0.9.7",
 ]
+
+[tool.setuptools.packages.find]
+include = ["llm_knowledge_injection_survey"]
 
 [tool.ruff.lint]
 select = ["I"]
