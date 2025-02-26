@@ -1,0 +1,10 @@
+[project]
+name = "llm-knowledge-injection-survey"
+version = "0.1.0"
+description = "LLM Knowledge Injection Survey"
+authors = ["Priyatham Kattakinda <priyathamkat@gmail.com>"]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "trl>=0.15.2",
+]
