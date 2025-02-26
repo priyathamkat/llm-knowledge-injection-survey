@@ -5,7 +5,7 @@ import numpy as np
 from pydantic import BaseModel
 
 
-class Sample(BaseModel):
+class SFTSample(BaseModel):
     prompt: str
     completion: str
 
@@ -14,18 +14,6 @@ class SimpleWordTask(ABC):
     def __init__(self, seed: int = 128):
         self._rng = np.random.default_rng(seed=seed)
         self._words = None
-
-    @property
-    @abstractmethod
-    def prompt_template(self) -> str:
-        """Template prompt for the task."""
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def completion_template(self) -> str:
-        """Template completion for the task."""
-        raise NotImplementedError
 
     @property
     def words(self) -> list[str]:
@@ -37,45 +25,33 @@ class SimpleWordTask(ABC):
         return self._words
 
     @abstractmethod
-    def sample(self, n: int) -> Sample:
-        """Sample a simple word task."""
+    def sft_sample(self, n: int) -> SFTSample:
+        """SFT samples for a simple word task."""
         raise NotImplementedError
 
 
 class WordLengthTask(SimpleWordTask):
-    @property
-    def prompt_template(self):
-        return "What is the length of the word: {word}? Output only the number and nothing else."
-
-    @property
-    def completion_template(self):
-        return "{length}"
-
-    def sample(self, num_samples: int) -> list[Sample]:
-        """Sample word length tasks."""
+    def sft_sample(self, num_samples: int) -> list[SFTSample]:
+        """SFT samples for word length task."""
+        prompt_template = "What is the length of the word: {word}? Output only the number and nothing else."
+        completion_template = "{length}"
         words = self._rng.choice(self.words, size=num_samples)
         samples = []
         for word in words:
-            prompt = self.prompt_template.format(word=word)
-            completion = self.completion_template.format(length=len(word))
-            samples.append(Sample(prompt=prompt, completion=completion))
+            prompt = prompt_template.format(word=word)
+            completion = completion_template.format(length=len(word))
+            samples.append(SFTSample(prompt=prompt, completion=completion))
         return samples
 
 
 class NthLetterTask(SimpleWordTask):
-    @property
-    def prompt_template(self):
-        return "What is the {n}{n_suffix} letter of the word: {word}? Output only the letter and nothing else."
-
-    @property
-    def completion_template(self):
-        return "{letter}"
-
-    def sample(self, num_samples: int) -> list[Sample]:
-        """Sample nth letter tasks."""
+    def sft_sample(self, num_samples: int) -> list[SFTSample]:
+        """SFT samples nth letter task."""
+        prompt_template = "What is the {n}{n_suffix} letter of the word: {word}? Output only the letter and nothing else."
+        completion_template = "{letter}"
         words = self._rng.choice(self.words, size=num_samples)
         samples = []
-        for word in words:    
+        for word in words:
             n = self._rng.integers(1, len(word) + 1)
             match n:
                 case 1:
@@ -86,7 +62,7 @@ class NthLetterTask(SimpleWordTask):
                     n_suffix = "rd"
                 case _:
                     n_suffix = "th"
-            prompt = self.prompt_template.format(n=n, n_suffix=n_suffix, word=word)
-            completion = self.completion_template.format(letter=word[n - 1])
-            samples.append(Sample(prompt=prompt, completion=completion))
+            prompt = prompt_template.format(n=n, n_suffix=n_suffix, word=word)
+            completion = completion_template.format(letter=word[n - 1])
+            samples.append(SFTSample(prompt=prompt, completion=completion))
         return samples

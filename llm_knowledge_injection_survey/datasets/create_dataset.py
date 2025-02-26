@@ -1,18 +1,18 @@
 import argparse
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 from datasets import Dataset, DatasetDict
 
 from llm_knowledge_injection_survey.datasets.tasks import (
     NthLetterTask,
-    Sample,
     SimpleWordTask,
     WordLengthTask,
 )
 
 
-def _create_dataset_split(samples: list[Sample]) -> Dataset:
+def _create_dataset_split(samples: list[Any]) -> Dataset:
     """Create a dataset split from the samples."""
     return Dataset.from_dict(
         {
@@ -37,7 +37,7 @@ def create_simple_task_dataset(
         tasks
     )  # Add one to ensure we have enough samples
     for task in tasks:
-        samples.extend(task.sample(num_samples_per_task))
+        samples.extend(task.sft_sample(num_samples_per_task))
     rng.shuffle(samples)
     samples = samples[:num_total_samples]  # Drop excess samples
     train_samples = samples[:num_train_samples]
