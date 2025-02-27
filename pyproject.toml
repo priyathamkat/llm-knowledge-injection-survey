@@ -10,6 +10,7 @@ dependencies = [
     "pydantic>=2.10.6",
     "tensorboard>=2.19.0",
     "trl>=0.15.2",
+    "unsloth>=2025.2.15",
 ]
 
 [dependency-groups]
