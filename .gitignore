@@ -17,3 +17,6 @@ wheels/
 
 # Output
 output/
+
+# Unsloth cache
+unsloth_compiled_cache/
